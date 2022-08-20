@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   presets: [],
   darkMode: 'media', // or 'class'
   theme: {
@@ -950,5 +952,5 @@ module.exports = {
     'active',
     'disabled',
   ],
-  plugins: [],
+  plugins: [require('tailwindcss'), require('autoprefixer')],
 }
