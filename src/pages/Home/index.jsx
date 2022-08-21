@@ -1,4 +1,5 @@
 import React from 'react';
+import 'upkit/dist/style.min.css';
 import { SideNav, LayoutSidebar } from 'upkit';
 
 import menus from './menus';
