@@ -1,16 +1,29 @@
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+import store from './app/store';
+import listen from './app/listener';
 
 import Home from './pages/Home';
+import Register from './pages/Register';
+import RegisterSuccess from './pages/RegisterSuccess';
 
 function App() {
+  React.useEffect(() => {
+    listen();
+  }, []);
   return (
     <div>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </HashRouter>
+      <Provider store={store}>
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/register/berhasil" element={<RegisterSuccess />} />
+          </Routes>
+        </HashRouter>
+      </Provider>
     </div>
   );
 }
