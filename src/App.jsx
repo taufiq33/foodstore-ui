@@ -8,6 +8,7 @@ import listen from './app/listener';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import RegisterSuccess from './pages/RegisterSuccess';
+import Login from './pages/Login';
 
 function App() {
   React.useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register" element={<Register />} />
             <Route path="/register/berhasil" element={<RegisterSuccess />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </HashRouter>
       </Provider>
