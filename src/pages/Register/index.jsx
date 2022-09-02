@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
   Button,
@@ -15,6 +15,7 @@ import {
 
 import rules from './validation';
 import { registerUser } from '../../api/auth';
+import StoreLogo from '../../components/StoreLogo';
 
 const statusList = {
   idle: 'idle',
@@ -68,6 +69,7 @@ function Register() {
   return (
     <LayoutOne size="small">
       <Card color="white">
+        <StoreLogo />
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl errorMessage={errors?.full_name?.message}>
             <InputText
@@ -113,6 +115,10 @@ function Register() {
             {status === statusList.process ? 'Sedang memproses ...' : 'Register'}
           </Button>
         </form>
+        <div className="text-center mt-2">
+          <p>Sudah punya akun?  </p>
+          <Link className="text-red-600 font-bold underline" to="/login"> Masuk Sekarang.</Link>
+        </div>
       </Card>
     </LayoutOne>
   );
