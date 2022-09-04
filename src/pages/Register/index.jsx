@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -28,6 +29,14 @@ function Register() {
   const [status, setStatus] = React.useState(statusList.idle);
 
   const navigate = useNavigate();
+
+  const auth = useSelector((state) => state.auth);
+
+  React.useEffect(() => {
+    if (auth?.user) {
+      navigate('/');
+    }
+  }, []);
 
   const {
     register,

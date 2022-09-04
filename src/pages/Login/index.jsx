@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
@@ -34,6 +34,13 @@ function Login() {
   } = useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+
+  React.useEffect(() => {
+    if (auth?.user) {
+      navigate('/');
+    }
+  }, []);
 
   async function onSubmit(formData) {
     setStatus(statusList.process);
