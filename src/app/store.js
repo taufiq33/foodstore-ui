@@ -4,14 +4,14 @@ import {
 import thunk from 'redux-thunk';
 
 import authReducer from '../features/Auth/reducer';
-import productReducer from '../features/Products/reducer';
+import productsReducer from '../features/Products/reducer';
 
 // eslint-disable-next-line no-underscore-dangle
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducers = combineReducers({
   auth: authReducer,
-  product: productReducer,
+  products: productsReducer,
 });
 
 const store = createStore(rootReducers, composerEnhancer(applyMiddleware(thunk)));
