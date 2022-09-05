@@ -32,11 +32,11 @@ export function fetchProduct() {
     const defaultParams = {
       limit: getState().products.perPage || 9,
       currentPage: getState().product.currentPage || 1,
-      skip: this.limit * this.currentPage - this.limit,
       tags: getState().products.tags || [],
       q: getState().product.keyword || '',
       category: getState().product.category || '',
     };
+    defaultParams.skip = defaultParams.limit * defaultParams.currentPage - defaultParams.limit;
 
     try {
       const { data, count } = await debouncedGetProducts(defaultParams);

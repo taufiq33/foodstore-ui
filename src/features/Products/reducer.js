@@ -26,7 +26,9 @@ const reducer = (state = initialState, action) => {
     case constant.FETCH_ERROR:
       return { ...state, status: statusList.error };
     case constant.FETCH_SUCCESS:
-      return { ...state, data: action.data, totalItems: action.count };
+      return {
+        ...state, data: action.data, totalItems: action.count, status: statusList.success,
+      };
     case constant.SET_PAGE:
       return { ...state, currentPage: action.currentPage };
     case constant.SET_KEYWORD:
