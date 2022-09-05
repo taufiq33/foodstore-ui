@@ -1,0 +1,10 @@
+export const FETCH_START = 'features/Products/FETCH_START';
+export const FETCH_SUCCESS = 'features/Products/FETCH_SUCCESS';
+export const FETCH_ERROR = 'features/Products/FETCH_ERROR';
+export const SET_PAGE = 'features/Products/SET_PAGE';
+export const SET_KEYWORD = 'features/Products/SET_KEYWORD';
+export const SET_CATEGORY = 'features/Products/SET_CATEGORY';
+export const SET_TAGS = 'features/Products/SET_TAGS';
+export const NEXT_PAGE = 'features/Products/NEXT_PAGE';
+export const PREV_PAGE = 'features/Products/PREV_PAGE';
+export const TOGGLE_TAG = 'features/Products/TOGGLE_TAG';
