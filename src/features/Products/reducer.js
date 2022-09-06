@@ -33,7 +33,7 @@ const reducer = (state = initialState, action) => {
       return { ...state, currentPage: action.currentPage };
     case constant.SET_KEYWORD:
       return {
-        ...state, category: '', tags: [], keyword: action.keyword,
+        ...state, category: '', tags: [], keyword: action.keyword, currentPage: 1,
       };
     case constant.SET_CATEGORY:
       return {
