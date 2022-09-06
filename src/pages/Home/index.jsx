@@ -2,7 +2,7 @@
 import React from 'react';
 import 'upkit/dist/style.min.css';
 import {
-  SideNav, LayoutSidebar, CardProduct, Responsive,
+  SideNav, LayoutSidebar, CardProduct, Responsive, Pagination,
 } from 'upkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
@@ -10,7 +10,10 @@ import { SyncLoader } from 'react-spinners';
 import config from '../../config';
 import menus from './menus';
 import TopBar from '../../components/TopBar';
-import { fetchProduct } from '../../features/Products/actions';
+import DummyProduct from '../../components/DummyProduct';
+import {
+  fetchProduct, goToNextPage, goToPrevPage, setPage,
+} from '../../features/Products/actions';
 
 function Home() {
   const dispatch = useDispatch();
@@ -18,7 +21,7 @@ function Home() {
 
   React.useEffect(() => {
     dispatch(fetchProduct());
-  }, [dispatch]);
+  }, [dispatch, products.currentPage]);
 
   return (
     <div>
@@ -41,8 +44,10 @@ function Home() {
                     : ''
                 }
 
+                {products.status === 'process' && <DummyProduct />}
+
                 <Responsive desktop={2} justify="stretch" items="stretch">
-                  {products.data.map((product) => (
+                  {products.status === 'success' && products.data.map((product) => (
                     <div key={product._id} className="p-2 m-3">
                       <CardProduct
                         title={product.name}
@@ -59,6 +64,27 @@ function Home() {
                     </div>
                   ))}
                 </Responsive>
+
+                {
+                  products.status === 'process'
+                    ? (
+                      <div className="flex items-center justify-center">
+                        <SyncLoader color="red" size={16} />
+                      </div>
+                    )
+                    : null
+                }
+
+                <div className="flex justify-center items-center my-10">
+                  <Pagination
+                    totalItems={products.totalItems}
+                    perPage={products.perPage}
+                    page={products.currentPage}
+                    onNext={() => dispatch(goToNextPage())}
+                    onPrev={() => dispatch(goToPrevPage())}
+                    onChange={(page) => dispatch(setPage(page))}
+                  />
+                </div>
               </div>
               <div className="w-full md:w-1/4 h-full shadow-lg bg-gray-100 border-r-2 border-white pl-5">
                 Bagian keranjang aplikasi
