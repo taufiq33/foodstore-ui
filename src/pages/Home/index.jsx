@@ -2,17 +2,18 @@
 import React from 'react';
 import 'upkit/dist/style.min.css';
 import {
-  SideNav, LayoutSidebar, CardProduct, Responsive, Pagination,
+  SideNav, LayoutSidebar, CardProduct, Responsive, Pagination, InputText,
 } from 'upkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
+import FaSearch from '@meronex/icons/fa/FaSearch';
 
 import config from '../../config';
 import menus from './menus';
 import TopBar from '../../components/TopBar';
 import DummyProduct from '../../components/DummyProduct';
 import {
-  fetchProduct, goToNextPage, goToPrevPage, setPage,
+  fetchProduct, goToNextPage, goToPrevPage, setKeyword, setPage,
 } from '../../features/Products/actions';
 
 function Home() {
@@ -21,7 +22,7 @@ function Home() {
 
   React.useEffect(() => {
     dispatch(fetchProduct());
-  }, [dispatch, products.currentPage]);
+  }, [dispatch, products.currentPage, products.keyword]);
 
   return (
     <div>
@@ -32,6 +33,16 @@ function Home() {
             <div className="md:flex md:flex-row-reverse w-full mr-5 h-full min-h-screen pt-4">
               <div className="w-full md:w-3/4 pl-5 pb-5">
                 <TopBar />
+                <div className="w-full my-5 lg:px-8 md:px-6 sm:px-4 text-center">
+                  <InputText
+                    iconBefore={<FaSearch />}
+                    placeholder="Search for something ..."
+                    fitContainer
+                    fullRound
+                    value={products.keyword}
+                    onChange={(e) => dispatch(setKeyword(e.target.value))}
+                  />
+                </div>
 
                 {
                   products.status === 'process' && !products.data.length
