@@ -47,7 +47,7 @@ export function fetchProduct() {
   };
 }
 
-export const setPage = (page = 1) => ({ type: constant.SET_PAGE, page });
+export const setPage = (page = 1) => ({ type: constant.SET_PAGE, currentPage: page });
 
 export const setKeyword = (keyword) => ({ type: constant.SET_KEYWORD, keyword });
 
