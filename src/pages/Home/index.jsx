@@ -2,7 +2,7 @@
 import React from 'react';
 import 'upkit/dist/style.min.css';
 import {
-  SideNav, LayoutSidebar, CardProduct, Responsive, Pagination, InputText,
+  SideNav, LayoutSidebar, CardProduct, Responsive, Pagination, InputText, Pill,
 } from 'upkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
@@ -10,10 +10,11 @@ import FaSearch from '@meronex/icons/fa/FaSearch';
 
 import config from '../../config';
 import menus from './menus';
+import tags from './tags';
 import TopBar from '../../components/TopBar';
 import DummyProduct from '../../components/DummyProduct';
 import {
-  fetchProduct, goToNextPage, goToPrevPage, setKeyword, setPage,
+  fetchProduct, goToNextPage, goToPrevPage, setCategory, setKeyword, setPage, setTags,
 } from '../../features/Products/actions';
 
 function Home() {
@@ -22,12 +23,19 @@ function Home() {
 
   React.useEffect(() => {
     dispatch(fetchProduct());
-  }, [dispatch, products.currentPage, products.keyword]);
+  }, [dispatch, products.currentPage, products.keyword, products.category, products.tags]);
 
   return (
     <div>
       <LayoutSidebar
-        sidebar={<SideNav items={menus} verticalAlign="top" />}
+        sidebar={(
+          <SideNav
+            items={menus}
+            verticalAlign="top"
+            active={products.category}
+            onChange={(category) => dispatch(setCategory(category))}
+          />
+        )}
         content={
           (
             <div className="md:flex md:flex-row-reverse w-full mr-5 h-full min-h-screen pt-4">
@@ -42,6 +50,17 @@ function Home() {
                     value={products.keyword}
                     onChange={(e) => dispatch(setKeyword(e.target.value))}
                   />
+                </div>
+                <div className="flex justify-center items-center lg:px-8 md:px-6 sm:px-4">
+                  {tags[products.category].map((tag) => (
+                    <Pill
+                      key={tag}
+                      isActive={products.tags.includes(tag)}
+                      text={tag}
+                      icon={tag.slice(0, 2).toUpperCase()}
+                      onClick={() => dispatch(setTags(tag))}
+                    />
+                  ))}
                 </div>
 
                 {
