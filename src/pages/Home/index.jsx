@@ -13,13 +13,18 @@ import menus from './menus';
 import tags from './tags';
 import TopBar from '../../components/TopBar';
 import DummyProduct from '../../components/DummyProduct';
+import Cart from '../../components/Cart';
 import {
   fetchProduct, goToNextPage, goToPrevPage, setCategory, setKeyword, setPage, setTags,
 } from '../../features/Products/actions';
+import {
+  addItem, removeItem,
+} from '../../features/Cart/actions';
 
 function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  const cart = useSelector((state) => state.cart);
 
   React.useEffect(() => {
     dispatch(fetchProduct());
@@ -83,7 +88,12 @@ function Home() {
                         title={product.name}
                         imgUrl={product.image_url ? `${config.apiHost}/uploads/${product.image_url}` : 'https://picsum.photos/seed/food/248/248'}
                         price={product.price}
-                        onAddToCart={() => console.log(`${product._id} added to cart`)}
+                        onAddToCart={() => dispatch(addItem({
+                          ...product,
+                          product: {
+                            _id: product._id,
+                          },
+                        }))}
                         withFavorite
                         subText={(
                           <p className="italic text-slate-100">
@@ -116,8 +126,12 @@ function Home() {
                   />
                 </div>
               </div>
-              <div className="w-full md:w-1/4 h-full shadow-lg bg-gray-100 border-r-2 border-white pl-5">
-                Bagian keranjang aplikasi
+              <div className="w-full md:w-1/4 h-full shadow-lg bg-gray-100 border-r-2 border-white">
+                <Cart
+                  items={cart}
+                  onIncFunc={(item) => dispatch(addItem(item))}
+                  onDecFunc={(item) => dispatch(removeItem(item))}
+                />
               </div>
             </div>
           )

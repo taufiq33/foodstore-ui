@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import store from './app/store';
 import listen from './app/listener';
+import { getCart } from './api/cart';
 
 import Home from './pages/Home';
 import Register from './pages/Register';
@@ -13,6 +14,7 @@ import Login from './pages/Login';
 function App() {
   React.useEffect(() => {
     listen();
+    getCart();
   }, []);
   return (
     <div>
