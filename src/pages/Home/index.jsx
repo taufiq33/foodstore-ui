@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { SyncLoader } from 'react-spinners';
 import FaSearch from '@meronex/icons/fa/FaSearch';
+import { useNavigate } from 'react-router-dom';
 
 import config from '../../config';
 import menus from './menus';
@@ -25,6 +26,7 @@ function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     dispatch(fetchProduct());
@@ -131,6 +133,7 @@ function Home() {
                   items={cart}
                   onIncFunc={(item) => dispatch(addItem(item))}
                   onDecFunc={(item) => dispatch(removeItem(item))}
+                  onCheckout={() => navigate('/checkout')}
                 />
               </div>
             </div>

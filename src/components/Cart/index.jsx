@@ -8,12 +8,15 @@ import {
   func,
   oneOfType,
 } from 'prop-types';
-import { CardItem } from 'upkit';
+import { CardItem, Button } from 'upkit';
 import FaCartPlus from '@meronex/icons/fa/FaCartPlus';
+import FaArrowRight from '@meronex/icons/fa/FaArrowRight';
 
 import config from '../../config';
 
-function Cart({ items, onDecFunc, onIncFunc }) {
+function Cart({
+  items, onDecFunc, onIncFunc, onCheckout,
+}) {
   return (
     <div className="p-2">
       <div className="flex text-2xl text-red-700 font-bold items-center justify-center">
@@ -25,17 +28,27 @@ function Cart({ items, onDecFunc, onIncFunc }) {
           Your cart is empty now..
         </p>
       )}
-      {items.map((item) => (
-        <div className="my-4" key={item._id}>
-          <CardItem
-            imgUrl={`${config.apiHost}/uploads/${item.image_url || item.product.image_url}`}
-            qty={item.qty}
-            name={item.name}
-            onDec={() => onDecFunc(item)}
-            onInc={() => onIncFunc(item)}
-          />
-        </div>
-      ))}
+      <div className="p-2">
+        {items.map((item) => (
+          <div className="my-4" key={item._id}>
+            <CardItem
+              imgUrl={`${config.apiHost}/uploads/${item.image_url || item.product.image_url}`}
+              qty={item.qty}
+              name={item.name}
+              onDec={() => onDecFunc(item)}
+              onInc={() => onIncFunc(item)}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="p-2 border-b mb-5 mt-5">
+        <Button
+          text="Checkout"
+          fitContainer
+          iconAfter={<FaArrowRight />}
+          onClick={() => onCheckout()}
+        />
+      </div>
     </div>
   );
 }
@@ -48,6 +61,7 @@ Cart.propTypes = {
   })).isRequired,
   onIncFunc: func.isRequired,
   onDecFunc: func.isRequired,
+  onCheckout: func.isRequired,
 };
 
 export default Cart;
