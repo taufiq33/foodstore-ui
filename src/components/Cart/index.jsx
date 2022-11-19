@@ -8,15 +8,18 @@ import {
   func,
   oneOfType,
 } from 'prop-types';
-import { CardItem, Button } from 'upkit';
+import { CardItem, Button, Text } from 'upkit';
 import FaCartPlus from '@meronex/icons/fa/FaCartPlus';
 import FaArrowRight from '@meronex/icons/fa/FaArrowRight';
 
 import config from '../../config';
+import sumPrice from '../../utils/sum-price';
+import formatRupiah from '../../utils/format-rupiah';
 
 function Cart({
   items, onDecFunc, onIncFunc, onCheckout,
 }) {
+  const total = sumPrice(items);
   return (
     <div className="p-2">
       <div className="flex text-2xl text-red-700 font-bold items-center justify-center">
@@ -40,6 +43,12 @@ function Cart({
             />
           </div>
         ))}
+      </div>
+      <div className="text-center">
+        <Text as="h5" bold>
+          Total :
+          {formatRupiah(total)}
+        </Text>
       </div>
       <div className="p-2 border-b mb-5 mt-5">
         <Button
