@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import RegisterSuccess from './pages/RegisterSuccess';
 import Login from './pages/Login';
+import UserAddressAdd from './pages/UserAddressAdd';
 
 function App() {
   React.useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/register/berhasil" element={<RegisterSuccess />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/alamat-pengiriman/tambah" element={<UserAddressAdd />} />
           </Routes>
         </HashRouter>
       </Provider>
