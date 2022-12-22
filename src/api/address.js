@@ -6,7 +6,7 @@ const { token } = store.getState().auth || JSON.parse(localStorage.getItem('auth
 
 async function getDeliveryAddress(params) {
   // eslint-disable-next-line no-return-await
-  return await axios.get(`${config.apiHost}/deliveryaddress`, {
+  return await axios.get(`${config.apiHost}/api/deliveryaddress`, {
     params: {
       limit: params.limit,
       skip: params.page * params.limit - params.limit,
@@ -19,7 +19,7 @@ async function getDeliveryAddress(params) {
 
 async function createDeliveryAddress(payload) {
   // eslint-disable-next-line no-return-await
-  return await axios.post(`${config.apiHost}/deliveryaddress`, payload, {
+  return await axios.post(`${config.apiHost}/api/deliveryaddress`, payload, {
     headers: {
       authorization: token,
     },
