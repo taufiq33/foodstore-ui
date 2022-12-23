@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import RegisterSuccess from './pages/RegisterSuccess';
 import Login from './pages/Login';
+import UserAddressList from './pages/UserAddressList';
 import UserAddressAdd from './pages/UserAddressAdd';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/register/berhasil" element={<RegisterSuccess />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/alamat-pengiriman" element={<UserAddressList />} />
             <Route path="/alamat-pengiriman/tambah" element={<UserAddressAdd />} />
           </Routes>
         </HashRouter>
