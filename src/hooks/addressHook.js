@@ -18,7 +18,7 @@ function useAddressHook() {
   // eslint-disable-next-line prefer-arrow-callback, consistent-return
   const fetchAddress = useCallback(async function getAddress() {
     setStatus(statusList.process);
-    const { data: fetchResult } = await getDeliveryAddress(page, limit);
+    const { data: fetchResult } = await getDeliveryAddress({ page, limit });
     const { data, count, error } = fetchResult;
 
     if (error) {
