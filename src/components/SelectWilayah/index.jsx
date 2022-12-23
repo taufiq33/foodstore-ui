@@ -18,7 +18,7 @@ function SelectWilayah({
     axios
       .get(`${config.apiHost}/api/wilayah/${tingkat}?kode_induk=${kodeInduk}`)
       .then(({ data }) => setResultData(data))
-      .finally(setIsFetching(false));
+      .finally(() => setIsFetching(false));
   }, [tingkat, kodeInduk]);
 
   return (
