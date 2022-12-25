@@ -12,6 +12,7 @@ import RegisterSuccess from './pages/RegisterSuccess';
 import Login from './pages/Login';
 import UserAddressList from './pages/UserAddressList';
 import UserAddressAdd from './pages/UserAddressAdd';
+import Checkout from './pages/Checkout';
 
 function App() {
   React.useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/alamat-pengiriman" element={<UserAddressList />} />
             <Route path="/alamat-pengiriman/tambah" element={<UserAddressAdd />} />
+            <Route path="/checkout" element={<Checkout />} />
           </Routes>
         </HashRouter>
       </Provider>
