@@ -3,10 +3,13 @@ import {
   Button, LayoutOne, Steps, Table, Card,
 } from 'upkit';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import FaCartPlus from '@meronex/icons/fa/FaCartPlus';
 import FaAddressCard from '@meronex/icons/fa/FaAddressCard';
 import FaInfoCircle from '@meronex/icons/fa/FaInfoCircle';
 import FaArrowRight from '@meronex/icons/fa/FaArrowRight';
+import FaArrowLeft from '@meronex/icons/fa/FaArrowLeft';
+import FaRegCheckCircle from '@meronex/icons/fa/FaRegCheckCircle';
 
 import config from '../../config';
 import formatRupiah from '../../utils/format-rupiah';
@@ -104,7 +107,7 @@ function Checkout() {
                 items={cart}
                 columns={cartColumns}
                 perPage={cart.length}
-                showPagination={0}
+                showPagination={false}
               />
               <div className="mt-2 flex justify-center items-center flex-col gap-2">
                 <h4 className="text-lg font-bold">
@@ -114,6 +117,7 @@ function Checkout() {
                   className="mr-10"
                   onClick={() => setActiveStep(activeStep + 1)}
                   iconAfter={<FaArrowRight />}
+                  size="large"
                 >
                   Selanjutnya
                 </Button>
@@ -139,7 +143,12 @@ function Checkout() {
                 selectedRow={selectedAddress}
                 onSelectRow={(address) => setSelectedAddress(address)}
               />
-              <p>
+              <div className="mt-5">
+                <Button>
+                  <Link to="/alamat-pengiriman/tambah">Tambah alamat baru</Link>
+                </Button>
+              </div>
+              <div className="my-10">
                 Your Selected Address is :
                 {
                   selectedAddress
@@ -152,7 +161,78 @@ function Checkout() {
                     )
                     : ''
                 }
-              </p>
+              </div>
+              <div className="flex items-center justify-evenly">
+                <Button
+                  onClick={() => setActiveStep(activeStep - 1)}
+                  iconBefore={<FaArrowLeft />}
+                  size="large"
+                >
+                  Sebelumnya
+                </Button>
+                <Button
+                  onClick={() => setActiveStep(activeStep + 1)}
+                  iconAfter={<FaArrowRight />}
+                  size="large"
+                  disabled={!selectedAddress}
+                >
+                  Selanjutnya
+                </Button>
+              </div>
+            </>
+          )
+          : null
+      }
+
+      {
+        activeStep === 2
+          ? (
+            <>
+              <Table
+                showPagination={false}
+                columns={[
+                  { Header: '', accessor: 'label' }, { Header: '', accessor: 'value' },
+                ]}
+                items={[
+                  {
+                    label: 'Alamat kirim',
+                    value: (
+                      <div>
+                        <Card
+                          header={selectedAddress.nama}
+                          body={`${selectedAddress.detail}, ${selectedAddress.kelurahan}, ${selectedAddress.kecamatan}, ${selectedAddress.kabupaten}, ${selectedAddress.provinsi}`}
+                          color="white"
+                        />
+                      </div>
+                    ),
+                  },
+                  {
+                    label: 'Subtotal', value: formatRupiah(sumPrice(cart)),
+                  },
+                  {
+                    label: 'Ongkir', value: formatRupiah(Number(config.globalOngkir)),
+                  },
+                  {
+                    label: 'Total keseluruhan', value: formatRupiah(Number(sumPrice(cart)) + Number(config.globalOngkir)),
+                  },
+                ]}
+              />
+              <div className="mt-5 flex items-center justify-evenly">
+                <Button
+                  onClick={() => setActiveStep(activeStep - 1)}
+                  iconBefore={<FaArrowLeft />}
+                  size="large"
+                >
+                  Sebelumnya
+                </Button>
+                <Button
+                  onClick={() => setActiveStep(activeStep + 1)}
+                  iconAfter={<FaRegCheckCircle />}
+                  size="large"
+                >
+                  Buat Order
+                </Button>
+              </div>
             </>
           )
           : null
