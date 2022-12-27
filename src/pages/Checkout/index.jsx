@@ -1,9 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import {
   Button, LayoutOne, Steps, Table, Card,
 } from 'upkit';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import FaCartPlus from '@meronex/icons/fa/FaCartPlus';
 import FaAddressCard from '@meronex/icons/fa/FaAddressCard';
 import FaInfoCircle from '@meronex/icons/fa/FaInfoCircle';
@@ -16,6 +17,8 @@ import formatRupiah from '../../utils/format-rupiah';
 import sumPrice from '../../utils/sum-price';
 import TopBar from '../../components/TopBar';
 import useAddressHook from '../../hooks/addressHook';
+import { createOrders } from '../../api/orders';
+import { clearItems } from '../../features/Cart/actions';
 
 const cartColumns = [
   {
@@ -64,6 +67,7 @@ function IconWrapper({ children }) {
 }
 
 function Checkout() {
+  const [invoiceCreateStatus, setInvoiceCreateStatus] = React.useState('idle');
   const [activeStep, setActiveStep] = React.useState(0);
   const [selectedAddress, setSelectedAddress] = React.useState(null);
   const {
@@ -75,6 +79,25 @@ function Checkout() {
     status,
   } = useAddressHook();
   const cart = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  if (!cart.length) return navigate('/');
+
+  async function handleCreateOrder() {
+    const payload = {
+      delivery_fee: config.globalOngkir,
+      // eslint-disable-next-line no-underscore-dangle
+      delivery_address: selectedAddress._id,
+    };
+    setInvoiceCreateStatus('loading');
+    const { data } = await createOrders(payload);
+    if (data?.error) return false;
+    if (data._id) {
+      setInvoiceCreateStatus('idle');
+      dispatch(clearItems());
+    }
+    return navigate(`/invoice/${data._id}`);
+  }
 
   const steps = [
     {
@@ -226,9 +249,10 @@ function Checkout() {
                   Sebelumnya
                 </Button>
                 <Button
-                  onClick={() => setActiveStep(activeStep + 1)}
+                  onClick={() => handleCreateOrder()}
                   iconAfter={<FaRegCheckCircle />}
                   size="large"
+                  disabled={invoiceCreateStatus === 'loading'}
                 >
                   Buat Order
                 </Button>
