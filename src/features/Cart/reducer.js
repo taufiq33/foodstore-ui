@@ -20,7 +20,7 @@ function cartReducer(state = initialState, action) {
       )).filter((cartItem) => cartItem.qty > 0);
 
     case constant.CLEAR_ITEMS:
-      return initialState;
+      return [];
 
     case constant.SET_ITEMS:
       return action.items;
