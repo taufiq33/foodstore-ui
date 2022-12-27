@@ -55,6 +55,7 @@ function Cart({
           text="Checkout"
           fitContainer
           iconAfter={<FaArrowRight />}
+          disabled={!items.length}
           onClick={() => onCheckout()}
         />
       </div>
