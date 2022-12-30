@@ -8,6 +8,7 @@ import { getCart } from './api/cart';
 
 import Home from './pages/Home';
 import UserAccount from './pages/UserAccount';
+import UserLogout from './pages/UserLogout';
 import Register from './pages/Register';
 import RegisterSuccess from './pages/RegisterSuccess';
 import Login from './pages/Login';
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/account" element={<UserAccount />} />
+            <Route path="/account/logout" element={<UserLogout />} />
             <Route path="/register" element={<Register />} />
             <Route path="/register/berhasil" element={<RegisterSuccess />} />
             <Route path="/login" element={<Login />} />
