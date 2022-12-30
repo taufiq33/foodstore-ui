@@ -12,6 +12,7 @@ import FaArrowRight from '@meronex/icons/fa/FaArrowRight';
 import FaArrowLeft from '@meronex/icons/fa/FaArrowLeft';
 import FaRegCheckCircle from '@meronex/icons/fa/FaRegCheckCircle';
 
+import IconWrapper from '../../components/IconWrapper';
 import config from '../../config';
 import formatRupiah from '../../utils/format-rupiah';
 import sumPrice from '../../utils/sum-price';
@@ -56,15 +57,6 @@ const addressColumn = [
     ),
   },
 ];
-
-// eslint-disable-next-line react/prop-types
-function IconWrapper({ children }) {
-  return (
-    <div className="flex justify-center">
-      {children}
-    </div>
-  );
-}
 
 function Checkout() {
   const [invoiceCreateStatus, setInvoiceCreateStatus] = React.useState('idle');
