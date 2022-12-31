@@ -14,6 +14,7 @@ function UserLogout() {
   React.useEffect(() => {
     logout()
       .then(() => dispatch(userLogout()))
+      .then(() => localStorage.setItem('cart', JSON.stringify([])))
       .then(() => navigate('/'));
   }, [dispatch, navigate]);
 
