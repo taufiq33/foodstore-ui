@@ -19,6 +19,15 @@ import formatRupiah from '../../utils/format-rupiah';
 function Cart({
   items, onDecFunc, onIncFunc, onCheckout,
 }) {
+  React.useEffect(() => {
+    const reloadCount = localStorage.getItem('reloadCount');
+    if (reloadCount < 2) {
+      localStorage.setItem('reloadCount', String(reloadCount + 1));
+      window.location.reload();
+    } else {
+      localStorage.removeItem('reloadCount');
+    }
+  }, []);
   const total = sumPrice(items);
   return (
     <div className="p-2">
