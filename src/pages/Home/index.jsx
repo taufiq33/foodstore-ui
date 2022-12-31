@@ -26,6 +26,7 @@ function Home() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -90,12 +91,17 @@ function Home() {
                         title={product.name}
                         imgUrl={product.image_url ? `${config.apiHost}/uploads/${product.image_url}` : 'https://picsum.photos/seed/food/248/248'}
                         price={product.price}
-                        onAddToCart={() => dispatch(addItem({
-                          ...product,
-                          product: {
-                            _id: product._id,
-                          },
-                        }))}
+                        onAddToCart={() => {
+                          if (!user) {
+                            return window.alert('Please login first to start shopping');
+                          }
+                          return dispatch(addItem({
+                            ...product,
+                            product: {
+                              _id: product._id,
+                            },
+                          }));
+                        }}
                         withFavorite
                         subText={(
                           <p className="italic text-slate-100">
