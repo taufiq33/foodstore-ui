@@ -51,6 +51,7 @@ function UserAccount() {
             body={<p className="font-bold text-white text-center">{items.label}</p>}
             header={items.icon}
             onClick={() => navigate(items.url)}
+            key={items.label}
           />
         ))}
       </Responsive>
