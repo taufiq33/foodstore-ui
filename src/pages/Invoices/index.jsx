@@ -2,7 +2,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { BounceLoader } from 'react-spinners';
-import { LayoutOne, Table, Text } from 'upkit';
+import {
+  Button, LayoutOne, Table, Text,
+} from 'upkit';
+import axios from 'axios';
 
 import TopBar from '../../components/TopBar';
 import getInvoiceById from '../../api/invoice';
@@ -10,10 +13,24 @@ import formatRupiah from '../../utils/format-rupiah';
 import StatusLabel from '../../components/StatusLabel';
 import config from '../../config';
 
+const columns = [
+  {
+    Header: 'Invoice',
+    accessor: 'label',
+  },
+  {
+    Header: '',
+    accessor: 'value',
+  },
+];
+
 function Invoices() {
   const [invoice, setInvoice] = React.useState(null);
   const [status, setStatus] = React.useState('process');
   const [error, setError] = React.useState(null);
+  const [initiatingPayment, setInitiatingPyament] = React.useState(false);
+  const [midtransRequestError, setMidtransRequestError] = React.useState(false);
+
   const { id } = useParams();
 
   React.useEffect(() => {
@@ -46,6 +63,18 @@ function Invoices() {
         <p>{error}</p>
       </div>
     );
+  }
+
+  async function handlePayment() {
+    setInitiatingPyament(true);
+
+    const { data: { token } } = await axios.get(`${config.apiHost}/api/invoices/${id}/initiate_payment`);
+    if (!token) {
+      setMidtransRequestError(true);
+    }
+
+    setInitiatingPyament(false);
+    window.snap.pay(token);
   }
 
   return (
@@ -89,18 +118,18 @@ function Invoices() {
               ),
             },
           ]}
-          columns={[
-            {
-              Header: 'Invoice',
-              accessor: 'label',
-            },
-            {
-              Header: '',
-              accessor: 'value',
-            },
-          ]}
+          columns={columns}
         />
       </div>
+      <Button
+        onClick={() => handlePayment()}
+        disabled={initiatingPayment}
+      >
+        Bayar
+      </Button>
+      { midtransRequestError ? (
+        <p>Sorry, error when initiating payment</p>
+      ) : '' }
     </LayoutOne>
   );
 }
